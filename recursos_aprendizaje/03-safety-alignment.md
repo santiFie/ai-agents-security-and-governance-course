@@ -160,6 +160,12 @@ esperanza de que el modelo "se porte bien" porque fue entrenado para eso.
 1. De las dos formas de romper la alineación de seguridad —jailbreak y
    degradación por fine-tuning—, ¿cuál te parece más fácil de detectar
    *después* de que ocurrió? ¿Cuál deja menos rastro?
+   
+   - **Jailbreak (más fácil de detectar post-mortem):** Al ocurrir en tiempo de inferencia, queda registrado en los logs de auditoría (el prompt ingresado y la respuesta del modelo).
+   - **Degradación por fine-tuning (deja menos rastro / más silencioso):** Como mencionás, el dataset puede parecer completamente inocuo y no tener intención maliciosa. La erosión ocurre silenciosamente en los pesos del modelo, y no vas a encontrar un prompt sospechoso evidente en los logs cotidianos hasta que el modelo falle ante una interacción no prevista.
+   
 2. Si un agente tiene alineación de seguridad sólida pero su función de
    recompensa está mal especificada, ¿alcanza con eso para que el sistema sea
    seguro? (Pista: repasá la distinción de la sección anterior.)
+
+    No alcanza. El agente no va a generar malware ni colaborar con pedidos dañinos porque sus pesos fueron entrenados para rechazar esos patrones. Sin embargo, el agente puede tomar decisiones técnicamente válidas para la función objetivo pero destructivas en la práctica (como borrar tests para que el pipeline pase en verde)

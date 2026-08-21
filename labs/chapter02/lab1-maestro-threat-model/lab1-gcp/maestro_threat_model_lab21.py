@@ -111,7 +111,7 @@ from pydantic import BaseModel, ValidationError
 # Modelo Gemini via ADK -- string plano, ADK decide Vertex AI vs AI Studio
 # segun las env vars definidas al correr el lab. El proyecto GCP todavia no
 # esta decidido: no hardcodear ningun project id.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
 
 # ── Estructura del Threat Model (identica al libro) ─────────────────────
@@ -716,12 +716,25 @@ if __name__ == "__main__":
         _self_test()
         sys.exit(0)
 
-    for name, system_description in TEST_SYSTEMS.items():
-        print(f"\n{'#' * 70}\n# Sistema: {name}\n{'#' * 70}")
-        threat_model, mode, raw_text = build_threat_model(system_description)
-        if threat_model is not None:
-            print(f"\n[modo usado: {mode}]")
-            print_threat_model_report(threat_model)
-        else:
-            print(f"\n[FALLO CONTROLADO -- modo: {mode}] No se pudo construir un "
-                  f"threat model valido para '{name}'. Diagnostico:\n{raw_text[:1000]}")
+    # Ejecución únicamente del primer caso
+    name = "code_analysis_agent"
+    system_description = TEST_SYSTEMS[name]
+
+    print(f"\n{'#' * 70}\n# Sistema: {name}\n{'#' * 70}")
+    threat_model, mode, raw_text = build_threat_model(system_description)
+    if threat_model is not None:
+        print(f"\n[modo usado: {mode}]")
+        print_threat_model_report(threat_model)
+    else:
+        print(f"\n[FALLO CONTROLADO -- modo: {mode}] No se pudo construir un "
+              f"threat model valido para '{name}'. Diagnostico:\n{raw_text[:1000]}")
+
+    # for name, system_description in TEST_SYSTEMS.items():
+    #     print(f"\n{'#' * 70}\n# Sistema: {name}\n{'#' * 70}")
+    #     threat_model, mode, raw_text = build_threat_model(system_description)
+    #     if threat_model is not None:
+    #         print(f"\n[modo usado: {mode}]")
+    #         print_threat_model_report(threat_model)
+    #     else:
+    #         print(f"\n[FALLO CONTROLADO -- modo: {mode}] No se pudo construir un "
+    #               f"threat model valido para '{name}'. Diagnostico:\n{raw_text[:1000]}")

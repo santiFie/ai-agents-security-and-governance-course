@@ -63,7 +63,7 @@ from google.genai import types
 
 # Modelo Gemini via ADK -- string plano, ADK decide Vertex AI vs AI Studio
 # segun las env vars definidas al correr el lab.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
 
 
 class MAESTROLayer(IntEnum):
