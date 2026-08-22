@@ -321,6 +321,26 @@ evaluación externa —lo que PPO ya hacía— pero por fuera del loop de RL,
 manteniendo la pérdida simple y barata de DPO en el paso de optimización
 propiamente dicho.
 
+DPO por definición matemática no puede recibir un número escalar de recompensa durante su paso de gradiente; solo entiende comparaciones binarias ($y_w$ gana a $y_l$).
+Por eso, Iterative DPO separa el proceso en dos fases secuenciales:
+
+### Etapa 1: Generación y Anotación (Data Flywheel)
+- El modelo actual ($\pi_\theta$) genera varias respuestas ($y_1, y_2$) para una lista de prompts. 
+- Aquí entra el Reward Model (o LLM-as-a-Judge): evalúa $y_1$ y $y_2$, asigna scores y etiqueta cuál es la preferida ($y_w$) y cuál la descartada ($y_l$).
+- El resultado es un dataset tabular estático de pares: (prompt, yw, yl).
+- El Reward Model se apaga y se descarga de la GPU.
+
+### Etapa 2: Optimización DPO (Supervisada estándar)
+- Tomas el dataset generado en la Etapa 1.
+- Entrenas el modelo usando la pérdida cerrada de DPO:
+
+$$
+\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x, y_w, y_l)} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)} \right) \right]
+$$  
+- En este paso no hay Reward Model ni Crítico en memoria. Solo se ajustan las probabilidades relativas de los tokens como si fuera un fine-tuning supervisado.
+
+Una vez termina la Etapa 2, la nueva política $\pi_{\theta_{nueva}}$ se usa para volver a empezar la Etapa 1 en la siguiente iteración.
+
 ## La infraestructura detrás del pipeline
 
 A nivel de ingeniería, un pipeline de RLHF para seguridad tiene tres bloques
@@ -379,3 +399,8 @@ conceptualmente distinto del fine-tuning ordinario:
    tener un *reward model* separado? ¿Qué es, entonces, lo que DPO realmente
    ahorra frente a PPO cuando se lo usa de forma iterativa: el cómputo, la
    complejidad, o ambos por igual?
+
+### Respuestas
+
+2.  El balance lo controlan el sesgo/pesos de las penalizaciones en el Reward Model y la presencia de ejemplos benignos limítrofes en el dataset. No puede fijarse una sola vez porque la distribución de uso cambia (drift, jailbreaks) y los modelos sufren degradación de alineamiento al ser reentrenados.
+3.  Se parece estructuralmente porque requiere volver a usar un juez/Reward Model para rankear respuestas frescas ($y_w, y_l$). DPO no ahorra cómputo bruto (ambos generan rollouts y evalúan), sino complejidad arquitectónica y estabilidad de entrenamiento (elimina la red del crítico y el bucle de optimización RL inestable).
