@@ -1,6 +1,6 @@
 # El claim `jti`: identificador único de un JWT
 
-> **Por qué este documento.** El Lab 3.2 (`labs/ch03-lab2-ollama/workload_identity_lab32.py`)
+> **Por qué este documento.** El Lab 3.2 (`labs/chapter03/lab2-workload-identity/lab2-ollama/workload_identity_lab32.py`)
 > usa el campo `jti` de cada SVID para revocar un token individual sin
 > esperar a que expire (Ejercicio 3: un SVID con TTL de una hora, sin
 > vencer, se rechaza igual si su `jti` está en una lista de revocación).

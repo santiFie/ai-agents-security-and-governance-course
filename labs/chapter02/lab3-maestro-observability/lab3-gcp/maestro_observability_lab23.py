@@ -15,7 +15,7 @@ cambios de la migracion a Ollama, no es especifico de un modelo):
 
 1. Circuit breaker en el emisor de logs (mismo patron que
    labs/ch10-labA-ollama/logi_agent_lab10a.py, funcion `_emit`, y que
-   labs/ch03-lab3-ollama/secretless_lab33.py): sin esto, `cloud_logging.
+   labs/chapter03/lab3-secretless/lab3-ollama/secretless_lab33.py): sin esto, `cloud_logging.
    Client()` puede construirse sin error aun con credenciales ADC vencidas
    -la reautenticacion recien se descubre al llamar `log_struct()`, que
    entonces tarda ~60s en agotar el timeout del metadata server de GCP antes
@@ -97,8 +97,8 @@ def log_maestro_event(layer: MAESTROLayer, event_type: str,
     """Loguea un evento agentico con su clasificacion MAESTRO.
 
     Circuit breaker (no esta en el original de ch02-labs.md -mismo patron
-    que labs/ch10-labA-ollama/logi_agent_lab10a.py y labs/ch03-lab3-ollama/
-    secretless_lab33.py): si `_cloud_logger.log_struct()` falla una vez
+    que labs/ch10-labA-ollama/logi_agent_lab10a.py y labs/chapter03/
+    lab3-secretless/lab3-ollama/secretless_lab33.py): si `_cloud_logger.log_struct()` falla una vez
     (p.ej. ADC vencidas, que tardan ~60s en descubrirse), se deshabilita
     `_cloud_logger` para el resto del proceso en vez de reintentar el
     timeout en cada evento subsiguiente."""

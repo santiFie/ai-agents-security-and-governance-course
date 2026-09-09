@@ -1,6 +1,6 @@
 # Guía de Demo — Tema 3: Identidad y Autenticación (SPIFFE/SPIRE)
 
-> Versión para alumnos. Slides de referencia: `slides/ch03-teoria-slides_condensado.md`.
+> Versión para alumnos. Slides de referencia: `slides/chapter03/teoria.pdf`.
 > Recurso de aprendizaje asociado: [`RECURSOS_APRENDIZAJE/jti.md`](../RECURSOS_APRENDIZAJE/jti.md)
 > (el claim `jti` que usa el Lab 3.2 para revocar SVIDs).
 
@@ -49,9 +49,9 @@ criptografía pura), así que sus dos carpetas corren el mismo código.
 **Comando** (mismo código en ambas carpetas):
 
 ```bash
-python3 labs/ch03-lab2-ollama/workload_identity_lab32.py
+python3 labs/chapter03/lab2-workload-identity/lab2-ollama/workload_identity_lab32.py
 # o, si se prefiere la carpeta GCP (código idéntico):
-python3 labs/ch03-lab2-gcp/workload_identity_lab32.py
+python3 labs/chapter03/lab2-workload-identity/lab2-gcp/workload_identity_lab32.py
 ```
 
 **Qué mirar**: `MiniSVIDIssuer` genera un par RSA-2048 y emite un JWT RS256
@@ -77,12 +77,12 @@ mitad de su TTL de 1 hora — sin depender de esperar a que expire solo.)*
 ```bash
 # Selftest: levanta OPA real vía Docker, corre 5 ejercicios contra el
 # PDP con requests HTTP puros -- NO invoca al LLM en ningún momento.
-python3 labs/ch03-lab1-ollama/opa_authz_lab31.py --selftest
-python3 labs/ch03-lab1-gcp/opa_authz_lab31.py --selftest
+python3 labs/chapter03/lab1-opa-policy-engine/lab1-ollama/opa_authz_lab31.py --selftest
+python3 labs/chapter03/lab1-opa-policy-engine/lab1-gcp/opa_authz_lab31.py --selftest
 
 # Con el agente real (dispara llamadas al LLM):
-python3 labs/ch03-lab1-ollama/opa_authz_lab31.py
-python3 labs/ch03-lab1-gcp/opa_authz_lab31.py
+python3 labs/chapter03/lab1-opa-policy-engine/lab1-ollama/opa_authz_lab31.py
+python3 labs/chapter03/lab1-opa-policy-engine/lab1-gcp/opa_authz_lab31.py
 ```
 
 **Qué mirar**: la política Rego `agent_authz` (default-deny) y la regla
@@ -129,8 +129,8 @@ no en el texto del agente.)*
 **Comando** (requiere un venv con Python 3.12 — ver el README del lab):
 
 ```bash
-./labs/ch03-lab4-ollama/venv_nemo/bin/python3 labs/ch03-lab4-ollama/nemo_guardrails_lab34.py --parte-b
-./labs/ch03-lab4-gcp/venv_nemo/bin/python3 labs/ch03-lab4-gcp/nemo_guardrails_lab34.py
+./labs/chapter03/lab4-nemo-guardrails/lab4-ollama/venv_nemo/bin/python3 labs/chapter03/lab4-nemo-guardrails/lab4-ollama/nemo_guardrails_lab34.py --parte-b
+./labs/chapter03/lab4-nemo-guardrails/lab4-gcp/venv_nemo/bin/python3 labs/chapter03/lab4-nemo-guardrails/lab4-gcp/nemo_guardrails_lab34.py
 ```
 
 **Qué mirar**: el flujo Colang `check dangerous tool request` ejecuta una
@@ -163,12 +163,12 @@ peligrosa igual choca con OPA aunque haya pasado el rail.)*
 **Comando**:
 
 ```bash
-python3 labs/ch03-lab3-ollama/secretless_lab33.py --selftest
-python3 labs/ch03-lab3-gcp/secretless_lab33.py --selftest
+python3 labs/chapter03/lab3-secretless/lab3-ollama/secretless_lab33.py --selftest
+python3 labs/chapter03/lab3-secretless/lab3-gcp/secretless_lab33.py --selftest
 
 # Con el agente real:
-python3 labs/ch03-lab3-ollama/secretless_lab33.py
-python3 labs/ch03-lab3-gcp/secretless_lab33.py
+python3 labs/chapter03/lab3-secretless/lab3-ollama/secretless_lab33.py
+python3 labs/chapter03/lab3-secretless/lab3-gcp/secretless_lab33.py
 ```
 
 **Qué mirar**: `SecretlessConfig` intenta GCP Secret Manager primero; si no
