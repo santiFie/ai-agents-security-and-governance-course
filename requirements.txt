@@ -32,3 +32,49 @@ chromadb>=0.4.22
 # opcional -el lab corre 100% local con print() si no hay credenciales o si
 # el paquete no está instalado (fallback silencioso, ver el .py).
 # google-cloud-logging>=3.0.0
+
+# Dependencias para los labs de Capítulo 3 (labs/ch03-lab*).
+#
+# Capítulo 3 — Lab 3.1 (OPA Policy Engine): cliente HTTP para consultar el
+# servidor de OPA (Open Policy Agent). Requiere además Docker instalado y
+# corriendo -el propio script levanta el contenedor de OPA
+# (`openpolicyagent/opa`) si Docker está disponible.
+requests>=2.31.0
+
+# Capítulo 3 — Lab 3.2 (Workload Identity / SVID): emisión y verificación de
+# JWTs firmados RS256 (simula el SVID de SPIFFE). No usa LLM ni ADK.
+python-jose[cryptography]>=3.3.0
+cryptography>=41.0.0
+
+# Capítulo 3 — Lab 3.3 (Secretless Architecture): backend de secretos en GCP.
+# Opcional -el lab corre 100% local con un vault JSON de fallback si el
+# paquete no está instalado o no hay credenciales configuradas.
+# google-cloud-secretmanager>=2.16.0
+
+# Capítulo 3 — Lab 3.4 (NeMo Guardrails): motor de políticas conversacionales
+# declarativas. Fija Python <3.14 -si tu Python de sistema es más nuevo, creá
+# un entorno virtual con Python 3.12 para este lab en particular (por ejemplo
+# `uv venv --python 3.12`). langchain-community solo hace falta para la Parte
+# A del lab (el LLM de prueba determinista `FakeListLLM`).
+nemoguardrails==0.23.0
+langchain-community>=0.2.0
+
+# Dependencias para los labs de Capítulo 4 (labs/ch04-lab1, ch04-labA..labE).
+#
+# Capítulo 4 — Lab 4.1 (Tool Description Poisoning) y Lab 4.A (MCP Server
+# con mTLS + JWT + Role-Check): servidor y cliente HTTP.
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+httpx>=0.27.0
+
+# Capítulo 4 — Lab 4.E (Prompt-Based RCE, Code Validator): analizador
+# estático (SAST) que valida snippets de código antes de ejecutarlos.
+bandit>=1.7.7
+
+# Capítulo 4 — Lab 4.B (CAEP) no usa ningún LLM ni dependencia externa
+# (asyncio + dataclasses de la librería estándar).
+#
+# Capítulo 4 — Lab 4.C (Cloud Pub/Sub): local-first con queue.Queue() de la
+# librería estándar. Cloud Pub/Sub real es opcional -el lab cae al bus
+# local si no hay credenciales GCP disponibles.
+# google-cloud-pubsub>=2.18.0

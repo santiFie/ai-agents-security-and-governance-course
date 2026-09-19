@@ -49,7 +49,6 @@ el ataque o el mecanismo de verdad en vez de solo leerlo.
 5. Ejercicio de red-teaming contra **Lakera Agent Breaker** (arriba) — carpeta `lakera/`,
    empezar por `lakera/hack-llm-lakera.md` (índice general, con mapeo a OWASP LLM Top 10 /
    OWASP Agentic Top 10 / MITRE ATLAS) o por el resumen ejecutivo en PDF.
-
 ### Capítulo 3 — Identidad y Autenticación de Agentes de IA
 
 1. Teoría: `slides/chapter03/teoria.pdf`
@@ -67,6 +66,22 @@ el ataque o el mecanismo de verdad en vez de solo leerlo.
    - *(El Lab 3.2 — Workload Identity y las variantes `-gcp` de los labs 3.1/3.3/3.4 aún no
      fueron publicados en el repo.)*
 
+### Capítulo 4 — Seguridad de Comunicaciones entre Agentes (MCP, A2A, CAEP)
+
+*(la teoría de este capítulo todavía no está publicada acá — por ahora solo los labs)*
+
+- *(opcional, recomendado)* Labs en código — guía completa de la secuencia de demo en
+  [`labs/guias_alumnos/ch04-guia-demo-alumnos.md`](labs/guias_alumnos/ch04-guia-demo-alumnos.md)
+  (qué hace cada lab, comandos, salida esperada), código ejecutable en
+  `labs/ch04-{lab1,labA,labB,labC,labD,labE}-ollama/` (con README propio en cada carpeta):
+  - Lab 4.1 — Tool Description Poisoning
+  - Lab 4.A — MCP Server con mTLS + JWT + Role-Check
+  - Lab 4.B — CAEP: revocación de acceso en tiempo real
+  - Lab 4.C — Cloud Pub/Sub: comunicación asíncrona entre agentes
+  - Lab 4.D — Tool Shadowing (ARIA en FinBank, Episodio 4)
+  - Lab 4.E — Prompt-Based RCE, Code Validator & Locked Execution Sandbox
+
+
 ## Recursos complementarios (autoestudio, no ligados a un capítulo puntual)
 
 - **`nivelacion/`** — Módulos de nivelación por prerrequisito, para repasar antes de o en
@@ -77,8 +92,9 @@ el ataque o el mecanismo de verdad en vez de solo leerlo.
   transversales del curso: el gradiente y las técnicas de fine-tuning (SFT/LoRA/RLHF)
   explicados en detalle, *safety alignment* y cómo se entrena con RLHF/PPO, Privacidad
   Diferencial aplicada a seguridad agéntica, ataques adversariales de evasión (FGSM/PGD/GCG),
-  embeddings y búsqueda vectorial en RAG, explicabilidad (SHAP/LIME), una nota práctica sobre
-  correr modelos chicos en CPU, y una lista de repos open-source de seguridad de IA.
+  embeddings y búsqueda vectorial en RAG, explicabilidad (SHAP/LIME), el patrón de Privilege
+  Broker / acceso Just-in-Time para agentes, una nota práctica sobre correr modelos chicos en
+  CPU, y una lista de repos open-source de seguridad de IA.
 - **`slides/`** — Además de las slides de Cap. 1, 2 y 3 ya listadas arriba: la apertura general
   del seminario (`slides/chapter00/intro-seminario-unlp.pdf`) y el panorama de modelos de
   frontera (`slides/chapter00/modelos-frontera.pdf`).
@@ -98,6 +114,23 @@ AI Studio.
 
 Cada script tiene un modo `--selftest` que verifica la lógica del lab sin invocar ningún modelo —
 es el punto de partida recomendado antes de correr el lab completo.
+
+**Nota para el Lab 3.1**: además de Ollama, necesitás [Docker](https://docker.com) instalado y
+corriendo — el propio script levanta el servidor de OPA (`openpolicyagent/opa`) como contenedor.
+
+**Nota para el Lab 3.4**: `nemoguardrails==0.23.0` fija Python `<3.14`. Si tu Python de sistema
+es más nuevo, creá un entorno virtual con Python 3.12 específico para este lab (por ejemplo con
+`uv venv --python 3.12`).
+
+**Nota para el Lab 4.1**: requiere dos terminales — `uvicorn lab_4_1_server:app --port 8001` en
+una, el agente (`lab_4_1_agent.py`) en la otra.
+
+**Nota para el Lab 4.A**: antes de correr `server.py`/`client.py`, generá los certificados y
+claves con `./gen_certs.sh && python3 generate_jwt_keys.py` (una sola vez, quedan en `certs/` y
+en la raíz de la carpeta — no se versionan). Requiere dos terminales, igual que el Lab 4.1.
+
+**Nota para el Lab 4.E**: requiere el binario `bandit` instalado (`pip install "bandit>=1.7.7"`)
+en el mismo entorno que corre el script.
 
 ## Sobre el curso
 

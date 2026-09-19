@@ -1,8 +1,13 @@
 __pycache__/
 *.pyc
 .pytest_cache/
-venv/
+venv*/
 .venv/
 env/
 .env
 .DS_Store
+
+# Lab 4.A (mTLS/JWT): certificados y claves que cada quien genera localmente
+# con gen_certs.sh / generate_jwt_keys.py -- nunca se versionan.
+certs/
+*.pem
