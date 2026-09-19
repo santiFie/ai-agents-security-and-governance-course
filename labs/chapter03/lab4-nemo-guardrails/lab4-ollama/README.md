@@ -69,11 +69,9 @@ bloqueada por la política de seguridad...". Parte B (si se ejecutara con
 debería interceptar antes de que el mensaje llegue al modelo local, igual
 que con `FakeListLLM`.
 
-## Requisitos de infraestructura
-
-`nemoguardrails==0.23.0` requiere Python `>=3.10,<3.14`. Si el Python del
-sistema es más nuevo, hay que crear un venv con Python 3.12 (por ejemplo con
-`uv python install 3.12 && uv venv --python 3.12 venv_nemo`).
+`nemoguardrails==0.23.0` requiere Python `>=3.10,<3.14`. El entorno virtual
+del proyecto (`.venv`) está configurado con **Python 3.12** fijado mediante
+el archivo `.python-version` en la raíz del repositorio.
 
 ## Hallazgos técnicos
 
@@ -124,12 +122,11 @@ instancia `ChatVertexAI` directamente y lo pasa como `llm=` a `build_rails()`
 Requiere ADC, un proyecto de GCP con Vertex AI habilitado, y el paquete
 extra `langchain-google-vertexai` (no viene con `nemoguardrails`):
 
-```
+```bash
 gcloud auth application-default login
-uv pip install --python venv_nemo/bin/python3 langchain-google-vertexai
 export GCP_PROJECT_ID=<tu-proyecto-gcp>
 export GCP_LOCATION=us-central1
-./venv_nemo/bin/python3 nemo_guardrails_lab34.py --parte-c
+python nemo_guardrails_lab34.py --parte-c
 ```
 
 Con este backend, tanto el mensaje peligroso (bloqueado por el rail antes de

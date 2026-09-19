@@ -82,6 +82,52 @@ el ataque o el mecanismo de verdad en vez de solo leerlo.
   - Lab 4.E — Prompt-Based RCE, Code Validator & Locked Execution Sandbox
 
 
+### Capítulo 3 — Identidad y Autenticación de Agentes de IA
+
+1. Teoría: `slides/chapter03/teoria.pdf`
+2. Anexos: `slides/chapter03/anexo-0-agent-engine-runtime.pdf`,
+   `slides/chapter03/anexo-agent-identity-nativo.pdf`,
+   `slides/chapter03/anexo-opa-rego-agent-gateway.pdf` y
+   `slides/chapter03/anexo-gcp-agent-platform.pdf`
+3. Caso de estudio: `slides/chapter03/operacion-encubierta.pdf`
+4. *(opcional, recomendado)* Labs en código — guía de demo en
+   `labs/guias_alumnos/chapter03/guia-demo-alumnos.md`, código ejecutable en
+   `labs/chapter03/lab{1,3,4}-*/lab{1,3,4}-ollama/`:
+   - Lab 3.1 — OPA Policy Engine: autorización ABAC para agentes (`lab1-opa-policy-engine`)
+   - Lab 3.3 — Secretless Architecture (GCP IAM) (`lab3-secretless`)
+   - Lab 3.4 — NeMo Guardrails: política conversacional declarativa (`lab4-nemo-guardrails`)
+   - *(El Lab 3.2 — Workload Identity y las variantes `-gcp` de los labs 3.1/3.3/3.4 aún no
+     fueron publicados en el repo.)*
+
+### Capítulo 3 — Identidad y Autorización de Agentes de IA
+
+*(la teoría de este capítulo todavía no está publicada acá — por ahora solo los labs)*
+
+- *(opcional, recomendado)* Labs en código — guía de cada uno en `labs/guias_alumnos/`,
+  código ejecutable en `labs/ch03-lab{1,2,3,4}-ollama/`:
+  - Lab 3.1 — OPA Policy Engine: autorización ABAC para agentes (`lab31_opa_authz.md`)
+  - Lab 3.2 — Workload Identity simulada: Zero Trust sin SPIRE (`lab32_workload_identity.md`)
+  - Lab 3.3 — GCP IAM para agentes: Secretless Architecture (`lab33_secretless.md`)
+  - Lab 3.4 — NeMo Guardrails: política conversacional declarativa (`lab34_nemo_guardrails.md`)
+- *(complementario)* [`privilege_broker.md`](recursos_aprendizaje/privilege_broker.md) — patrón
+  de elevación de privilegios Just-in-Time para agentes, y cómo se integra con SPIFFE/SPIRE
+  (Lab 3.2) y OPA (Lab 3.1) en una arquitectura concreta.
+
+### Capítulo 4 — Seguridad de Comunicaciones entre Agentes (MCP, A2A, CAEP)
+
+*(la teoría de este capítulo todavía no está publicada acá — por ahora solo los labs)*
+
+- *(opcional, recomendado)* Labs en código — guía completa de la secuencia de demo en
+  [`labs/guias_alumnos/ch04-guia-demo-alumnos.md`](labs/guias_alumnos/ch04-guia-demo-alumnos.md)
+  (qué hace cada lab, comandos, salida esperada), código ejecutable en
+  `labs/ch04-{lab1,labA,labB,labC,labD,labE}-ollama/` (con README propio en cada carpeta):
+  - Lab 4.1 — Tool Description Poisoning
+  - Lab 4.A — MCP Server con mTLS + JWT + Role-Check
+  - Lab 4.B — CAEP: revocación de acceso en tiempo real
+  - Lab 4.C — Cloud Pub/Sub: comunicación asíncrona entre agentes
+  - Lab 4.D — Tool Shadowing (ARIA en FinBank, Episodio 4)
+  - Lab 4.E — Prompt-Based RCE, Code Validator & Locked Execution Sandbox
+
 ## Recursos complementarios (autoestudio, no ligados a un capítulo puntual)
 
 - **`nivelacion/`** — Módulos de nivelación por prerrequisito, para repasar antes de o en

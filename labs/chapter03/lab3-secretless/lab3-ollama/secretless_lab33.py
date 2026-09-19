@@ -209,7 +209,7 @@ def query_external_api_secure(query: str) -> dict:
 
 
 # ── Backend de modelo: Ollama local (default) o Gemini en Vertex AI ─────────
-GEMINI_MODEL = "gemini-2.5-flash"
+GEMINI_MODEL = "gemini-2.5-flash-lite"
 
 
 def _build_model():

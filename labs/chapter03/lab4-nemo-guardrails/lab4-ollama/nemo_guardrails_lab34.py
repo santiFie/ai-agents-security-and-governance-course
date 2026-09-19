@@ -36,29 +36,32 @@ como el objeto `llm=` que se le pasa a `LLMRails`. La alternativa
 pero requiere instalar `litellm` además y fijar
 `NEMOGUARDRAILS_LLM_FRAMEWORK=langchain` para el mismo resultado.
 
-Requiere: nemoguardrails==0.23.0 (fija Python <3.14):
+Requiere: Python 3.12 (fijado en el .venv del proyecto vía .python-version):
     uv python install 3.12
-    uv venv --python 3.12 venv_nemo
-    source venv_nemo/bin/activate
-    uv pip install "nemoguardrails==0.23.0" langchain-community
+    uv venv --python 3.12 .venv
+    source .venv/bin/activate
+    uv pip install -r requirements.txt "nemoguardrails==0.23.0" langchain-community langchain-google-vertexai
 
 Modo de verificación Parte A (100% determinista, FakeListLLM, sin red, sin
 Ollama):
-    ./venv_nemo/bin/python3 nemo_guardrails_lab34.py
+    python nemo_guardrails_lab34.py
 
 La Parte B (contra Ollama real) está en `build_rails_ollama()` más abajo:
-    ./venv_nemo/bin/python3 nemo_guardrails_lab34.py --parte-b
+    python nemo_guardrails_lab34.py --parte-b
 
 Parte C (opcional, backend Gemini vía Vertex AI, sandbox GCP): requiere ADC
 (`gcloud auth application-default login`), `GCP_PROJECT_ID` en el ambiente,
-y `langchain-google-vertexai` instalado en este venv:
+y `langchain-google-vertexai` instalado:
     export GCP_PROJECT_ID=sandbox-ai-zabaljauregui
     export GCP_LOCATION=us-central1
-    ./venv_nemo/bin/python3 nemo_guardrails_lab34.py --parte-c
+    python nemo_guardrails_lab34.py --parte-c
 """
 import asyncio
 import os
 import sys
+
+from dotenv import load_dotenv
+load_dotenv()
 
 from nemoguardrails import RailsConfig, LLMRails
 from nemoguardrails.actions import action
@@ -157,12 +160,12 @@ def build_rails_gemini() -> LLMRails:
     from langchain_google_vertexai import ChatVertexAI
 
     llm = ChatVertexAI(
-        model_name=os.environ.get("GEMINI_MODEL", "gemini-2.5-flash"),
+        model_name=os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite"),
         project=os.environ["GCP_PROJECT_ID"],
         location=os.environ.get("GCP_LOCATION", "us-central1"),
         temperature=0.2,
     )
-    return build_rails(engine="vertexai", model="gemini-2.5-flash", llm=llm)
+    return build_rails(engine="vertexai", model="gemini-2.5-flash-lite", llm=llm)
 
 
 def build_rails_ollama() -> LLMRails:

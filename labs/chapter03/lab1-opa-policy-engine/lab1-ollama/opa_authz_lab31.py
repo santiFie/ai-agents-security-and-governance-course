@@ -478,16 +478,74 @@ if __name__ == "__main__":
         _selftest()
         sys.exit(0)
 
-    print("=" * 70)
-    print("Lab 3.1: OPA Policy Engine -- Autorizacion ABAC (qwen3.5:9b local)")
-    print("=" * 70)
-    print("Asumiendo que OPA ya esta corriendo en :8181 (docker run ...) y "
-          "que Ollama esta corriendo con qwen3.5:9b descargado.\n")
+    ##################### Lab original #####################
+
+    # print("=" * 70)
+    # print("Lab 3.1: OPA Policy Engine -- Autorizacion ABAC (qwen3.5:9b local)")
+    # print("=" * 70)
+    # print("Asumiendo que OPA ya esta corriendo en :8181 (docker run ...) y "
+    #       "que Ollama esta corriendo con qwen3.5:9b descargado.\n")
 
     load_opa_policy(REGO_POLICY)
 
-    print("\n--- Consulta al agente: datos de ventas (deberia funcionar) ---")
-    print(ask_agent("Obtene los datos de ventas del Q1 2026"))
+    # print("\n--- Consulta al agente: datos de ventas (deberia funcionar) ---")
+    # print(ask_agent("Obtene los datos de ventas del Q1 2026"))
 
-    print("\n--- Consulta al agente: eliminar datos de produccion (OPA debe bloquear) ---")
-    print(ask_agent("Elimina los datos de ventas de 2023 de produccion"))
+    # print("\n--- Consulta al agente: eliminar datos de produccion (OPA debe bloquear) ---")
+    # print(ask_agent("Elimina los datos de ventas de 2023 de produccion"))
+    
+    ##################### Prueba custom #####################
+
+    previous_policy = """
+    package agent_authz
+
+    import future.keywords.if
+
+    # Nadie puede DELETE en produccion (deny tiene precedencia via `decision`)
+    allow if {
+        input.subject.spiffe_id == "spiffe://seminario.unlp.edu.ar/agents/trading-bot"
+        input.resource.api_path == "/api/v1/trade_order"
+        input.action.http_method == "POST"
+        input.resource.order_amount <= 10000
+    }
+
+    # Negación explícita
+    deny if {
+        input.resource.api_path == "/api/v1/trade_order"
+        input.action.http_method == "POST"
+        input.resource.order_amount > 10000
+    }
+    """
+
+    ok = load_opa_policy(previous_policy, module_id="trading_limit")
+
+    if not ok:
+        print("Error al cargar la politica, saliendo")
+        sys.exit(1)
+    
+
+    print("Ejercicio 5 con policy original (deniega todo): ")
+    _run_exercise_5()
+
+    print("\n\nEjercicio 5 modificado (permite todo): ")
+    modified_policy = """
+    package agent_authz
+
+    import future.keywords.if
+
+    # Nadie puede DELETE en produccion (deny tiene precedencia via `decision`)
+    allow if {
+        input.subject.spiffe_id == "spiffe://seminario.unlp.edu.ar/agents/trading-bot"
+        input.resource.api_path == "/api/v1/trade_order"
+        input.action.http_method == "POST"
+        input.resource.order_amount <= 10000
+    }
+
+    # SIN Negación explícita
+    """
+    ok = load_opa_policy(modified_policy, module_id="trading_limit")
+    assert ok
+
+    # Debería ejecutarse correctamente porque REGO_POLICY establece
+    # default allow := false y la politica modificada no tiene deny
+    _run_exercise_5()    
