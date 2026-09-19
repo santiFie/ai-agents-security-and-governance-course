@@ -59,22 +59,22 @@ cryptography>=41.0.0
 nemoguardrails==0.23.0
 langchain-community>=0.2.0
 
-# Dependencias para los labs de Capítulo 4 (labs/ch04-lab1, ch04-labA..labE).
+# Dependencias para los labs de Capítulo 4 (labs/chapter04/lab1..lab6).
 #
-# Capítulo 4 — Lab 4.1 (Tool Description Poisoning) y Lab 4.A (MCP Server
+# Capítulo 4 — Lab 4.1 (Tool Description Poisoning) y Lab 4.2 (MCP Server
 # con mTLS + JWT + Role-Check): servidor y cliente HTTP.
 fastapi>=0.110.0
 uvicorn[standard]>=0.29.0
 httpx>=0.27.0
 
-# Capítulo 4 — Lab 4.E (Prompt-Based RCE, Code Validator): analizador
+# Capítulo 4 — Lab 4.6 (Prompt-Based RCE, Code Validator): analizador
 # estático (SAST) que valida snippets de código antes de ejecutarlos.
 bandit>=1.7.7
 
-# Capítulo 4 — Lab 4.B (CAEP) no usa ningún LLM ni dependencia externa
+# Capítulo 4 — Lab 4.3 (CAEP) no usa ningún LLM ni dependencia externa
 # (asyncio + dataclasses de la librería estándar).
 #
-# Capítulo 4 — Lab 4.C (Cloud Pub/Sub): local-first con queue.Queue() de la
+# Capítulo 4 — Lab 4.4 (Cloud Pub/Sub): local-first con queue.Queue() de la
 # librería estándar. Cloud Pub/Sub real es opcional -el lab cae al bus
 # local si no hay credenciales GCP disponibles.
 # google-cloud-pubsub>=2.18.0

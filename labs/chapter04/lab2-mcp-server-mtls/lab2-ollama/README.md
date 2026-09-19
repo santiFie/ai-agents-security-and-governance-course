@@ -1,4 +1,4 @@
-# Lab 4.A — MCP Server con mTLS + JWT + Role-Check
+# Lab 4.2 — MCP Server con mTLS + JWT + Role-Check
 
 ## Qué es este lab
 
@@ -93,4 +93,4 @@ decisión de seguridad, no algo que el usuario deba poder elegir.
 
 El agente puede correr contra Gemini en Vertex AI en vez de Ollama local
 en el Paso 5, sin tocar mTLS/JWT/role-check — solo cambia el backend del
-modelo. Ver `ch04-labA-gcp/` para la variante equivalente.
+modelo. Ver `lab2-gcp/` para la variante equivalente.

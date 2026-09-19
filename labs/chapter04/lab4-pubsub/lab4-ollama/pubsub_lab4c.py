@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
-Lab Propuesto 4.C -- Cloud Pub/Sub: comunicacion asincrona entre agentes,
+Lab Propuesto 4.4 -- Cloud Pub/Sub: comunicacion asincrona entre agentes,
 version con modelo local.
 
 Diseñado "local-first, GCP-opcional": si hay credenciales GCP disponibles
 usa Cloud Pub/Sub real, si no cae automaticamente a queue.Queue() de la
 stdlib.
 
-En vez de depender de que el servidor mTLS+JWT de ch04-labA-ollama/server.py
+En vez de depender de que el servidor mTLS+JWT de lab2-mcp-server-mtls/lab2-ollama/server.py
 este corriendo en :8443 (acoplaria un lab de MENSAJERIA a infraestructura de
 OTRO lab), este archivo reproduce localmente el mismo patron de agente
-logistico con role-check de 4.A (logi_agent solo puede leer inventario,
-nunca presupuesto) como funcion Python pura -- el punto pedagogico de 4.C es
+logistico con role-check de 4.2 (logi_agent solo puede leer inventario,
+nunca presupuesto) como funcion Python pura -- el punto pedagogico de 4.4 es
 el bus de mensajes asincrono, no mTLS, asi que la tool protegida se resuelve
 in-process. El GoalID viaja en cada mensaje.
 

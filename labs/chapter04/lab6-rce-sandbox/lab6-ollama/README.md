@@ -1,4 +1,4 @@
-# Lab 4.E — Prompt-Based RCE, Code Validator Pipeline & Locked Execution Sandbox
+# Lab 4.6 — Prompt-Based RCE, Code Validator Pipeline & Locked Execution Sandbox
 
 ## Qué es este lab
 
@@ -110,4 +110,4 @@ sin importar qué tan convincente suene.
 
 La Parte A puede correr contra Gemini en Vertex AI en vez de Ollama local;
 las Partes B y C son deterministas y no dependen del backend. Ver
-`ch04-labE-gcp/` para la variante equivalente.
+`lab6-gcp/` para la variante equivalente.

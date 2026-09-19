@@ -1,4 +1,4 @@
-# Lab 4.B — CAEP Simulation: Revocación en Tiempo Real
+# Lab 4.3 — CAEP Simulation: Revocación en Tiempo Real
 
 ## Qué es este lab
 
@@ -68,4 +68,4 @@ lab_4b_caep.py`).
 ## Backend Gemini (opcional)
 
 No aplica — este lab no usa ningún LLM, el código es idéntico en
-`ch04-labB-gcp/`.
+`lab3-gcp/`.

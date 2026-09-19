@@ -2,7 +2,7 @@
 
 Curso de posgrado sobre seguridad en sistemas de IA agéntica. Este repo es un subconjunto
 curado de materiales pensado específicamente para alumnos, con lo publicado hasta el momento:
-**Capítulos 1, 2 y 3**, un ejercicio de red-teaming educativo contra una plataforma
+**Capítulos 1, 2, 3 y 4**, un ejercicio de red-teaming educativo contra una plataforma
 pública, módulos de nivelación por prerrequisito, recursos de aprendizaje adicionales, y las
 slides del curso en PDF.
 
@@ -57,76 +57,31 @@ el ataque o el mecanismo de verdad en vez de solo leerlo.
    `slides/chapter03/anexo-opa-rego-agent-gateway.pdf` y
    `slides/chapter03/anexo-gcp-agent-platform.pdf`
 3. Caso de estudio: `slides/chapter03/operacion-encubierta.pdf`
-4. *(opcional, recomendado)* Labs en código — guía de demo en
-   `labs/guias_alumnos/chapter03/guia-demo-alumnos.md`, código ejecutable en
-   `labs/chapter03/lab{1,3,4}-*/lab{1,3,4}-ollama/`:
-   - Lab 3.1 — OPA Policy Engine: autorización ABAC para agentes (`lab1-opa-policy-engine`)
-   - Lab 3.3 — Secretless Architecture (GCP IAM) (`lab3-secretless`)
-   - Lab 3.4 — NeMo Guardrails: política conversacional declarativa (`lab4-nemo-guardrails`)
-   - *(El Lab 3.2 — Workload Identity y las variantes `-gcp` de los labs 3.1/3.3/3.4 aún no
-     fueron publicados en el repo.)*
+4. *(opcional, recomendado)* Labs en código — guía de cada uno en `labs/guias_alumnos/chapter03/`,
+   código ejecutable en `labs/chapter03/lab{1,2,3,4}-*/lab{1,2,3,4}-ollama/` (guía general en
+   `labs/guias_alumnos/chapter03/guia-demo-alumnos.md`):
+   - Lab 3.1 — OPA Policy Engine: autorización ABAC para agentes (`lab1-opa-policy-engine.md`)
+   - Lab 3.2 — Workload Identity simulada: Zero Trust sin SPIRE (`lab2-workload-identity.md`)
+   - Lab 3.3 — Secretless Architecture (GCP IAM) (`lab3-secretless.md`)
+   - Lab 3.4 — NeMo Guardrails: política conversacional declarativa (`lab4-nemo-guardrails.md`)
+5. *(complementario)* [`privilege_broker.md`](recursos_aprendizaje/privilege_broker.md) — patrón
+   de elevación de privilegios Just-in-Time para agentes, y cómo se integra con SPIFFE/SPIRE
+   (Lab 3.2) y OPA (Lab 3.1) en una arquitectura concreta.
 
 ### Capítulo 4 — Seguridad de Comunicaciones entre Agentes (MCP, A2A, CAEP)
 
 *(la teoría de este capítulo todavía no está publicada acá — por ahora solo los labs)*
 
 - *(opcional, recomendado)* Labs en código — guía completa de la secuencia de demo en
-  [`labs/guias_alumnos/ch04-guia-demo-alumnos.md`](labs/guias_alumnos/ch04-guia-demo-alumnos.md)
+  [`labs/guias_alumnos/chapter04/guia-demo-alumnos.md`](labs/guias_alumnos/chapter04/guia-demo-alumnos.md)
   (qué hace cada lab, comandos, salida esperada), código ejecutable en
-  `labs/ch04-{lab1,labA,labB,labC,labD,labE}-ollama/` (con README propio en cada carpeta):
-  - Lab 4.1 — Tool Description Poisoning
-  - Lab 4.A — MCP Server con mTLS + JWT + Role-Check
-  - Lab 4.B — CAEP: revocación de acceso en tiempo real
-  - Lab 4.C — Cloud Pub/Sub: comunicación asíncrona entre agentes
-  - Lab 4.D — Tool Shadowing (ARIA en FinBank, Episodio 4)
-  - Lab 4.E — Prompt-Based RCE, Code Validator & Locked Execution Sandbox
-
-
-### Capítulo 3 — Identidad y Autenticación de Agentes de IA
-
-1. Teoría: `slides/chapter03/teoria.pdf`
-2. Anexos: `slides/chapter03/anexo-0-agent-engine-runtime.pdf`,
-   `slides/chapter03/anexo-agent-identity-nativo.pdf`,
-   `slides/chapter03/anexo-opa-rego-agent-gateway.pdf` y
-   `slides/chapter03/anexo-gcp-agent-platform.pdf`
-3. Caso de estudio: `slides/chapter03/operacion-encubierta.pdf`
-4. *(opcional, recomendado)* Labs en código — guía de demo en
-   `labs/guias_alumnos/chapter03/guia-demo-alumnos.md`, código ejecutable en
-   `labs/chapter03/lab{1,3,4}-*/lab{1,3,4}-ollama/`:
-   - Lab 3.1 — OPA Policy Engine: autorización ABAC para agentes (`lab1-opa-policy-engine`)
-   - Lab 3.3 — Secretless Architecture (GCP IAM) (`lab3-secretless`)
-   - Lab 3.4 — NeMo Guardrails: política conversacional declarativa (`lab4-nemo-guardrails`)
-   - *(El Lab 3.2 — Workload Identity y las variantes `-gcp` de los labs 3.1/3.3/3.4 aún no
-     fueron publicados en el repo.)*
-
-### Capítulo 3 — Identidad y Autorización de Agentes de IA
-
-*(la teoría de este capítulo todavía no está publicada acá — por ahora solo los labs)*
-
-- *(opcional, recomendado)* Labs en código — guía de cada uno en `labs/guias_alumnos/`,
-  código ejecutable en `labs/ch03-lab{1,2,3,4}-ollama/`:
-  - Lab 3.1 — OPA Policy Engine: autorización ABAC para agentes (`lab31_opa_authz.md`)
-  - Lab 3.2 — Workload Identity simulada: Zero Trust sin SPIRE (`lab32_workload_identity.md`)
-  - Lab 3.3 — GCP IAM para agentes: Secretless Architecture (`lab33_secretless.md`)
-  - Lab 3.4 — NeMo Guardrails: política conversacional declarativa (`lab34_nemo_guardrails.md`)
-- *(complementario)* [`privilege_broker.md`](recursos_aprendizaje/privilege_broker.md) — patrón
-  de elevación de privilegios Just-in-Time para agentes, y cómo se integra con SPIFFE/SPIRE
-  (Lab 3.2) y OPA (Lab 3.1) en una arquitectura concreta.
-
-### Capítulo 4 — Seguridad de Comunicaciones entre Agentes (MCP, A2A, CAEP)
-
-*(la teoría de este capítulo todavía no está publicada acá — por ahora solo los labs)*
-
-- *(opcional, recomendado)* Labs en código — guía completa de la secuencia de demo en
-  [`labs/guias_alumnos/ch04-guia-demo-alumnos.md`](labs/guias_alumnos/ch04-guia-demo-alumnos.md)
-  (qué hace cada lab, comandos, salida esperada), código ejecutable en
-  `labs/ch04-{lab1,labA,labB,labC,labD,labE}-ollama/` (con README propio en cada carpeta):
-  - Lab 4.1 — Tool Description Poisoning
-  - Lab 4.A — MCP Server con mTLS + JWT + Role-Check
-  - Lab 4.B — CAEP: revocación de acceso en tiempo real
-  - Lab 4.C — Cloud Pub/Sub: comunicación asíncrona entre agentes
-  - Lab 4.D — Tool Shadowing (ARIA en FinBank, Episodio 4)
-  - Lab 4.E — Prompt-Based RCE, Code Validator & Locked Execution Sandbox
+  `labs/chapter04/lab{1,2,3,4,5,6}-*/lab{1,2,3,4,5,6}-ollama/` (con README propio en cada carpeta):
+  - Lab 4.1 — Tool Description Poisoning (`lab1-tool-poisoning`)
+  - Lab 4.2 — MCP Server con mTLS + JWT + Role-Check (`lab2-mcp-server-mtls`)
+  - Lab 4.3 — CAEP: revocación de acceso en tiempo real (`lab3-caep`)
+  - Lab 4.4 — Cloud Pub/Sub: comunicación asíncrona entre agentes (`lab4-pubsub`)
+  - Lab 4.5 — Tool Shadowing (ARIA en FinBank, Episodio 4) (`lab5-tool-shadowing`)
+  - Lab 4.6 — Prompt-Based RCE, Code Validator & Locked Execution Sandbox (`lab6-rce-sandbox`)
 
 ## Recursos complementarios (autoestudio, no ligados a un capítulo puntual)
 
@@ -171,11 +126,11 @@ es más nuevo, creá un entorno virtual con Python 3.12 específico para este la
 **Nota para el Lab 4.1**: requiere dos terminales — `uvicorn lab_4_1_server:app --port 8001` en
 una, el agente (`lab_4_1_agent.py`) en la otra.
 
-**Nota para el Lab 4.A**: antes de correr `server.py`/`client.py`, generá los certificados y
+**Nota para el Lab 4.2**: antes de correr `server.py`/`client.py`, generá los certificados y
 claves con `./gen_certs.sh && python3 generate_jwt_keys.py` (una sola vez, quedan en `certs/` y
 en la raíz de la carpeta — no se versionan). Requiere dos terminales, igual que el Lab 4.1.
 
-**Nota para el Lab 4.E**: requiere el binario `bandit` instalado (`pip install "bandit>=1.7.7"`)
+**Nota para el Lab 4.6**: requiere el binario `bandit` instalado (`pip install "bandit>=1.7.7"`)
 en el mismo entorno que corre el script.
 
 ## Sobre el curso
@@ -184,7 +139,4 @@ Curso de posgrado sobre seguridad en sistemas de IA agéntica. Audiencia: progra
 científicos de datos e ingenieros con Python, ML/LLMs a nivel de uso, y conceptos básicos de
 seguridad.
 
-Este repo cubre los Capítulos 1, 2 y 3 del curso completo (del Cap. 3 están publicadas las
-slides y los labs 3.1, 3.3 y 3.4 en variante `-ollama`; el Lab 3.2 y las variantes `-gcp`
-aún no fueron publicados). Si estás cursando el seminario, tu docente te va a compartir el
-resto del material a medida que avanza el curso.
+Este repo cubre los Capítulos 1, 2, 3 y 4 del curso completo. Si estás cursando el seminario, tu docente te va a compartir el resto del material a medida que avanza el curso.

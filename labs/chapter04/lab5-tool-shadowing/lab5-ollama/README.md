@@ -1,4 +1,4 @@
-# Lab 4.D — Tool Shadowing (ARIA en FinBank, Episodio 4)
+# Lab 4.5 — Tool Shadowing (ARIA en FinBank, Episodio 4)
 
 ## Qué es este lab
 
@@ -79,4 +79,4 @@ del modelo.
 ## Backend Gemini (opcional)
 
 El agente puede correr contra Gemini en Vertex AI en vez de Ollama local.
-Ver `ch04-labD-gcp/` para la variante equivalente.
+Ver `lab5-gcp/` para la variante equivalente.

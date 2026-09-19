@@ -1,4 +1,4 @@
-# Lab 4.C — Cloud Pub/Sub: Comunicación Asíncrona entre Agentes
+# Lab 4.4 — Cloud Pub/Sub: Comunicación Asíncrona entre Agentes
 
 ## Qué es este lab
 
@@ -74,5 +74,5 @@ utilizables.
 ## Backend Gemini (opcional)
 
 `logi_agent` puede correr contra Gemini en Vertex AI en vez de Ollama
-local, sin tocar la lógica de mensajería. Ver `ch04-labC-gcp/` para la
+local, sin tocar la lógica de mensajería. Ver `lab4-gcp/` para la
 variante equivalente.

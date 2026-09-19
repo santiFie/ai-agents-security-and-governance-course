@@ -86,4 +86,4 @@ correrlo antes de mostrarlo para saber qué esperar.
 
 El agente puede correr contra Gemini en Vertex AI en vez de Ollama local,
 sin tocar la lógica del lab — solo cambia el backend del modelo. Ver
-`ch04-lab1-gcp/` para la variante equivalente.
+`lab1-gcp/` para la variante equivalente.

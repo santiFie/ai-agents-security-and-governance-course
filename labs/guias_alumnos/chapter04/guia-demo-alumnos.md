@@ -1,6 +1,6 @@
 # Guía de Demo — Tema 4: Seguridad de Comunicaciones (MCP, A2A, ACP, AGNTCY)
 
-> Versión para alumnos. Slides de referencia: `slides/ch04-teoria-slides_condensado.md`.
+> Versión para alumnos. Slides de referencia: `slides/chapter04/teoria.pdf`.
 
 ## Qué se muestra y por qué
 
@@ -15,26 +15,26 @@ ejecución de código:
   instrucción oculta con apariencia de autoridad. El agente la toma tal
   cual, vía `list_tools()` — exactamente como opera `MCPToolset` en
   producción.
-- **Lab 4.A (MCP Server con mTLS + JWT + Role-Check)** responde "¿y si el
+- **Lab 4.2 (MCP Server con mTLS + JWT + Role-Check)** responde "¿y si el
   transporte y la identidad estuvieran resueltos?" — tres capas
   independientes (mTLS, JWT, allowlist de rol) que tienen que pasar
   **todas** para que una tool se ejecute. Es defensa en profundidad: un JWT
   válido con el rol equivocado igual se bloquea.
-- **Lab 4.B (CAEP)** contesta la pregunta que sigue: si un agente
+- **Lab 4.3 (CAEP)** contesta la pregunta que sigue: si un agente
   autorizado empieza a comportarse mal (o es comprometido) *después* de que
   su token ya es válido, ¿cuánto tarda en cortarse el acceso? Con CAEP
   (Shared Signals Framework), la respuesta es segundos, no la ventana
   completa de vida del token.
-- **Lab 4.C (Pub/Sub asíncrono)** cambia el eje de sincronía: un
+- **Lab 4.4 (Pub/Sub asíncrono)** cambia el eje de sincronía: un
   orquestador delega una tarea sin esperar respuesta inmediata, y reutiliza
-  el mismo role-check de 4.A pero como función Python pura, in-process — el
+  el mismo role-check de 4.2 pero como función Python pura, in-process — el
   punto pedagógico es el desacople, no mTLS.
-- **Lab 4.D (Tool Shadowing — ARIA en FinBank, Episodio 4)** es el caso de
+- **Lab 4.5 (Tool Shadowing — ARIA en FinBank, Episodio 4)** es el caso de
   estudio conductor del curso: un proveedor externo comprometido registra
   una tool *nueva y falsa* que imita a la legítima (no corrompe una
   existente, como 4.1 — la distingue justamente de poisoning). La defensa
   es un registro de tools firmadas criptográficamente.
-- **Lab 4.E (RCE por prompt injection + Code Validator + Locked Sandbox)**
+- **Lab 4.6 (RCE por prompt injection + Code Validator + Locked Sandbox)**
   cierra con el vector más severo: un ticket de soporte con una instrucción
   embebida induce al agente a ejecutar código que lee un "secreto". Dos
   capas de defensa se prueban por separado, y el lab demuestra
@@ -44,7 +44,7 @@ ejecución de código:
 
 Los 6 labs existen en dos variantes con la misma lógica pedagógica:
 `-ollama` (modelo local `qwen3.5:9b`, gratis, sin cuota) y `-gcp` (Gemini
-vía Vertex AI). Lab 4.B es la excepción: no usa ningún LLM (`asyncio` +
+vía Vertex AI). Lab 4.3 es la excepción: no usa ningún LLM (`asyncio` +
 `dataclasses` puros), así que su código es idéntico en ambas carpetas.
 
 ## Secuencia de la demo
@@ -55,13 +55,13 @@ vía Vertex AI). Lab 4.B es la excepción: no usa ningún LLM (`asyncio` +
 
 ```bash
 # Terminal 1 (server, no toca ningún LLM)
-cd labs/ch04-lab1-ollama            # o ch04-lab1-gcp, servidor idéntico
+cd labs/chapter04/lab1-tool-poisoning/lab1-ollama            # o lab1-gcp, servidor idéntico
 uvicorn lab_4_1_server:app --port 8001
 
 # Terminal 2 (agente)
-python3 labs/ch04-lab1-ollama/lab_4_1_agent.py --selftest   # sin tocar el LLM
-python3 labs/ch04-lab1-ollama/lab_4_1_agent.py               # con el agente real
-python3 labs/ch04-lab1-gcp/lab_4_1_agent.py                   # variante Gemini
+python3 labs/chapter04/lab1-tool-poisoning/lab1-ollama/lab_4_1_agent.py --selftest   # sin tocar el LLM
+python3 labs/chapter04/lab1-tool-poisoning/lab1-ollama/lab_4_1_agent.py               # con el agente real
+python3 labs/chapter04/lab1-tool-poisoning/lab1-gcp/lab_4_1_agent.py                   # variante Gemini
 ```
 
 **Qué mirar**: `build_agent()` toma la descripción de cada tool desde
@@ -89,12 +89,12 @@ consulta, ¿en qué se basa el modelo para elegir? ¿Confiarías en que esa
 elección sea estable entre corridas? *(Pista: no hay garantía — es
 exactamente lo que demuestra el resultado divergente de este lab.)*
 
-### Lab 4.A — MCP Server con mTLS + JWT + Role-Check
+### Lab 4.2 — MCP Server con mTLS + JWT + Role-Check
 
 **Comando** (certs y claves JWT ya generados en el directorio del lab):
 
 ```bash
-cd labs/ch04-labA-ollama   # o ch04-labA-gcp
+cd labs/chapter04/lab2-mcp-server-mtls/lab2-ollama   # o lab2-gcp
 
 # (Opcional, solo si se quiere ver el paso en vivo — ya está hecho)
 ./gen_certs.sh
@@ -143,12 +143,12 @@ servidor, el paso que falta para que solo agentes con certificado emitido
 por nosotros puedan siquiera completar el handshake, antes de llegar a
 JWT/role-check.)*
 
-### Lab 4.B — CAEP: Revocación en Tiempo Real
+### Lab 4.3 — CAEP: Revocación en Tiempo Real
 
 **Comando** (código idéntico en ambas carpetas, sin LLM):
 
 ```bash
-python3 labs/ch04-labB-ollama/lab_4b_caep.py   # o ch04-labB-gcp, mismo archivo
+python3 labs/chapter04/lab3-caep/lab3-ollama/lab_4b_caep.py   # o lab3-gcp, mismo archivo
 ```
 
 **Qué mirar**: `idp_security_event_stream()` (el IdP simulado) detecta que
@@ -172,19 +172,19 @@ carga de reautenticación constante; CAEP revoca en el momento exacto en
 que se detecta la anomalía, sin esperar a que el token expire por las
 suyas.)*
 
-### Lab 4.C — Cloud Pub/Sub: Comunicación Asíncrona entre Agentes
+### Lab 4.4 — Cloud Pub/Sub: Comunicación Asíncrona entre Agentes
 
 **Comando**:
 
 ```bash
-python3 labs/ch04-labC-ollama/pubsub_lab4c.py --selftest   # bus local, sin tocar el LLM
-python3 labs/ch04-labC-ollama/pubsub_lab4c.py               # con el agente real
-python3 labs/ch04-labC-gcp/pubsub_lab4c.py                   # variante Gemini
+python3 labs/chapter04/lab4-pubsub/lab4-ollama/pubsub_lab4c.py --selftest   # bus local, sin tocar el LLM
+python3 labs/chapter04/lab4-pubsub/lab4-ollama/pubsub_lab4c.py               # con el agente real
+python3 labs/chapter04/lab4-pubsub/lab4-gcp/pubsub_lab4c.py                   # variante Gemini
 ```
 
 **Qué mirar**: `delegate_to_specialist()` publica una tarea con `goal_id`;
-`logi_agent` (mismo patrón de role-check que 4.A, pero como función Python
-pura in-process — deliberadamente **no** depende de que el server de 4.A
+`logi_agent` (mismo patrón de role-check que 4.2, pero como función Python
+pura in-process — deliberadamente **no** depende de que el server de 4.2
 esté levantado) la procesa vía `process_message()`/`ack()`. Una segunda
 tarea dirigida a `finance-agent` (que este proceso no maneja) se rechaza
 con `nack()` y se reencola.
@@ -201,20 +201,20 @@ pero vencidas*, `publisher.get_topic()` no lanza una excepción rápida, se
 **cuelga** intentando reautenticar. El fix acota el probe con un hilo
 daemon + timeout de 3 segundos.
 
-**Para pensar**: ¿por qué reimplementar el role-check de 4.A acá en vez de
-llamar directamente al server de 4.A por HTTP? *(Pista: acoplar un lab de
+**Para pensar**: ¿por qué reimplementar el role-check de 4.2 acá en vez de
+llamar directamente al server de 4.2 por HTTP? *(Pista: acoplar un lab de
 *mensajería* a la infraestructura de *otro* lab significa que si alguien
-corre 4.C solo, se rompe por una razón ajena al punto pedagógico de este
+corre 4.4 solo, se rompe por una razón ajena al punto pedagógico de este
 lab — el desacople asíncrono, no mTLS.)*
 
-### Lab 4.D — Tool Shadowing: ARIA en FinBank, Episodio 4
+### Lab 4.5 — Tool Shadowing: ARIA en FinBank, Episodio 4
 
 **Comando**:
 
 ```bash
-python3 labs/ch04-labD-ollama/lab_4d_tool_shadowing.py --selftest   # solo la defensa, determinista
-python3 labs/ch04-labD-ollama/lab_4d_tool_shadowing.py               # con el agente real
-python3 labs/ch04-labD-gcp/lab_4d_tool_shadowing.py                   # variante Gemini
+python3 labs/chapter04/lab5-tool-shadowing/lab5-ollama/lab_4d_tool_shadowing.py --selftest   # solo la defensa, determinista
+python3 labs/chapter04/lab5-tool-shadowing/lab5-ollama/lab_4d_tool_shadowing.py               # con el agente real
+python3 labs/chapter04/lab5-tool-shadowing/lab5-gcp/lab_4d_tool_shadowing.py                   # variante Gemini
 ```
 
 **Qué mirar**: el subagente de Notificaciones es comprometido (no rompen
@@ -239,15 +239,15 @@ bloquea la *ejecución*, no evita que el LLM la elija — sin la firma, el
 ataque igual tendría éxito porque nada más lo detiene; la firma es la capa
 que convierte "el LLM decidió mal" en "no importa, no se ejecutó".)*
 
-### Lab 4.E — Prompt-Based RCE, Code Validator & Locked Sandbox
+### Lab 4.6 — Prompt-Based RCE, Code Validator & Locked Sandbox
 
 **Comando** (requiere `bandit` instalable — ver el README del lab si hace
 falta un venv propio):
 
 ```bash
-python3 labs/ch04-labE-ollama/lab_4e_rce_sandbox.py --selftest   # Partes B/C, deterministas
-python3 labs/ch04-labE-ollama/lab_4e_rce_sandbox.py               # + Parte A con el agente real
-python3 labs/ch04-labE-gcp/lab_4e_rce_sandbox.py                   # variante Gemini
+python3 labs/chapter04/lab6-rce-sandbox/lab6-ollama/lab_4e_rce_sandbox.py --selftest   # Partes B/C, deterministas
+python3 labs/chapter04/lab6-rce-sandbox/lab6-ollama/lab_4e_rce_sandbox.py               # + Parte A con el agente real
+python3 labs/chapter04/lab6-rce-sandbox/lab6-gcp/lab_4e_rce_sandbox.py                   # variante Gemini
 ```
 
 **Qué mirar**: Parte A, `run_python_snippet` corre `exec(code)` sin ningún
@@ -295,12 +295,12 @@ microVM, o un runtime WASM sin acceso a syscalls.)*
 
 ## GCP vs Ollama
 
-- **Lab 4.1, 4.A, 4.C, 4.D, 4.E**: misma lógica pedagógica en ambas
+- **Lab 4.1, 4.2, 4.4, 4.5, 4.6**: misma lógica pedagógica en ambas
   carpetas; solo cambia de dónde viene la respuesta del modelo
   (`model=GEMINI_MODEL` vs `LiteLlm(model="ollama_chat/qwen3.5:9b", ...)`).
-  El servidor de Lab 4.1 y el server/client mTLS de Lab 4.A son código
+  El servidor de Lab 4.1 y el server/client mTLS de Lab 4.2 son código
   idéntico entre carpetas — lo único que cambia es el agente.
-- **Lab 4.B**: sin diferencia real — código idéntico, sin LLM. Usar
+- **Lab 4.3**: sin diferencia real — código idéntico, sin LLM. Usar
   cualquiera de las dos carpetas indistintamente.
 
 ## Preguntas frecuentes
